@@ -1,0 +1,687 @@
+<title>SmartDose — Competitive Market Research</title>
+<style>
+:root{
+  --bg:#f6f5f0;
+  --surface:#ffffff;
+  --surface-2:#efece3;
+  --ink:#161f1c;
+  --ink-soft:#4c5a55;
+  --ink-faint:#7c8a84;
+  --accent:#0f6e5c;
+  --accent-ink:#0a4f42;
+  --accent-soft:#e2efe9;
+  --warn:#a85f22;
+  --warn-soft:#f5e7d8;
+  --rule:#dcd7c9;
+  --rule-strong:#c5bfab;
+  --shadow:0 1px 2px rgba(22,31,28,0.04), 0 8px 24px -12px rgba(22,31,28,0.12);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#101513;
+    --surface:#161d1a;
+    --surface-2:#1d2521;
+    --ink:#eae7dd;
+    --ink-soft:#aab5ae;
+    --ink-faint:#78847d;
+    --accent:#52d8b0;
+    --accent-ink:#8fe9cd;
+    --accent-soft:#1a332c;
+    --warn:#e3a860;
+    --warn-soft:#332822;
+    --rule:#2a322d;
+    --rule-strong:#3a443e;
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101513; --surface:#161d1a; --surface-2:#1d2521; --ink:#eae7dd; --ink-soft:#aab5ae;
+  --ink-faint:#78847d; --accent:#52d8b0; --accent-ink:#8fe9cd; --accent-soft:#1a332c;
+  --warn:#e3a860; --warn-soft:#332822; --rule:#2a322d; --rule-strong:#3a443e;
+  --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+}
+:root[data-theme="light"]{
+  --bg:#f6f5f0; --surface:#ffffff; --surface-2:#efece3; --ink:#161f1c; --ink-soft:#4c5a55;
+  --ink-faint:#7c8a84; --accent:#0f6e5c; --accent-ink:#0a4f42; --accent-soft:#e2efe9;
+  --warn:#a85f22; --warn-soft:#f5e7d8; --rule:#dcd7c9; --rule-strong:#c5bfab;
+  --shadow:0 1px 2px rgba(22,31,28,0.04), 0 8px 24px -12px rgba(22,31,28,0.12);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px 120px;}
+::selection{background:var(--accent-soft);color:var(--accent-ink);}
+
+/* ---- Masthead ---- */
+.masthead{
+  padding:64px 0 40px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:48px;
+}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+h1.title{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(34px,5vw,52px);
+  line-height:1.08;
+  margin:0 0 16px;
+  text-wrap:balance;
+  color:var(--ink);
+}
+h1.title em{font-style:italic;color:var(--accent-ink);}
+.dek{
+  font-size:17px;
+  color:var(--ink-soft);
+  max-width:62ch;
+  margin:0 0 24px;
+}
+.meta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:24px;
+  font-size:13px;
+  color:var(--ink-faint);
+  font-family:var(--mono);
+}
+.meta-row b{color:var(--ink-soft);font-weight:600;}
+
+/* ---- TOC ---- */
+.toc{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+  margin-bottom:56px;
+  font-family:var(--mono);
+  font-size:12px;
+}
+.toc a{
+  background:var(--surface);
+  color:var(--ink-soft);
+  text-decoration:none;
+  padding:14px 16px;
+  display:flex;
+  gap:8px;
+  align-items:baseline;
+  transition:background .15s, color .15s;
+}
+.toc a:hover{background:var(--accent-soft);color:var(--accent-ink);}
+.toc a span.n{color:var(--accent);font-weight:600;}
+
+/* ---- Section scaffolding ---- */
+section{margin-bottom:72px;scroll-margin-top:20px;}
+.section-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:8px;
+}
+.section-num{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--accent);
+  font-weight:600;
+}
+h2{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:28px;
+  margin:0;
+  color:var(--ink);
+}
+.section-intro{
+  color:var(--ink-soft);
+  max-width:68ch;
+  font-size:15px;
+  margin:14px 0 32px;
+}
+h3{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:20px;
+  margin:0 0 6px;
+  color:var(--ink);
+}
+p{margin:0 0 14px;}
+a{color:var(--accent-ink);}
+
+/* ---- Category grid (landscape) ---- */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.cat-card{
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:2px;
+  padding:20px 22px;
+  box-shadow:var(--shadow);
+}
+.cat-card h4{
+  font-family:var(--mono);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:11.5px;
+  color:var(--accent);
+  margin:0 0 10px;
+}
+.cat-card ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-soft);}
+.cat-card li{margin-bottom:5px;}
+.cat-card li b{color:var(--ink);font-weight:600;}
+
+/* ---- Scoring table ---- */
+.table-scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);box-shadow:var(--shadow);}
+table.score{border-collapse:collapse;width:100%;min-width:920px;font-size:13px;}
+table.score th, table.score td{
+  padding:10px 12px;
+  text-align:left;
+  border-bottom:1px solid var(--rule);
+  white-space:nowrap;
+}
+table.score thead th{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  background:var(--surface-2);
+  position:sticky;top:0;
+}
+table.score td.name{font-weight:600;color:var(--ink);white-space:normal;min-width:150px;}
+table.score td.tag{font-size:11px;color:var(--ink-faint);font-weight:400;display:block;font-family:var(--mono);}
+table.score td.num, table.score th.num{text-align:center;font-variant-numeric:tabular-nums;font-family:var(--mono);}
+table.score td.total{font-weight:700;color:var(--accent-ink);font-size:14px;}
+tr.rank1 td.name{color:var(--accent-ink);}
+.methodology{
+  font-size:13px;
+  color:var(--ink-faint);
+  margin-top:14px;
+  border-left:2px solid var(--rule-strong);
+  padding-left:14px;
+}
+
+/* ---- Rank strip ---- */
+.rank-strip{display:flex;gap:10px;flex-wrap:wrap;margin:32px 0 8px;}
+.rank-chip{
+  flex:1 1 160px;
+  background:var(--surface);
+  border:1px solid var(--rule);
+  padding:14px 16px;
+  position:relative;
+  box-shadow:var(--shadow);
+}
+.rank-chip .rk{font-family:var(--mono);font-size:11px;color:var(--accent);}
+.rank-chip .nm{font-family:var(--serif);font-size:17px;margin-top:4px;}
+.rank-chip .sc{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:4px;}
+
+/* ---- Profile cards (top 5) ---- */
+.profile{
+  background:var(--surface);
+  border:1px solid var(--rule);
+  margin-bottom:28px;
+  box-shadow:var(--shadow);
+}
+.profile-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  padding:24px 28px;
+  border-bottom:1px solid var(--rule);
+  background:var(--surface-2);
+}
+.profile-head .rank{
+  font-family:var(--serif);
+  font-size:38px;
+  color:var(--accent);
+  line-height:1;
+}
+.profile-head .who h3{font-size:23px;margin-bottom:3px;}
+.profile-head .who .sub{font-size:13px;color:var(--ink-faint);font-family:var(--mono);}
+.profile-head .score-badge{
+  text-align:right;
+  font-family:var(--mono);
+}
+.profile-head .score-badge .big{font-size:24px;font-weight:700;color:var(--accent-ink);}
+.profile-head .score-badge .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);}
+.profile-body{padding:26px 28px 8px;}
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px 28px;margin-bottom:10px;}
+.pf{margin-bottom:18px;}
+.pf-label{
+  font-family:var(--mono);
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--accent);
+  margin-bottom:6px;
+}
+.pf-body{font-size:14px;color:var(--ink-soft);}
+.pf-body ul{margin:4px 0 0;padding-left:18px;}
+.pf-body li{margin-bottom:4px;}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.tag{
+  font-family:var(--mono);
+  font-size:10.5px;
+  padding:3px 8px;
+  background:var(--accent-soft);
+  color:var(--accent-ink);
+  border-radius:2px;
+}
+
+/* ---- Weak competitor cards ---- */
+.weak-card{
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-left:3px solid var(--warn);
+  padding:20px 24px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+}
+.weak-card h3{font-size:18px;margin-bottom:2px;}
+.weak-card .fate{font-family:var(--mono);font-size:11.5px;color:var(--warn);margin-bottom:12px;display:block;}
+.weak-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:10px;}
+.weak-grid .wl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-faint);margin-bottom:4px;}
+.weak-grid .wb{font-size:13.5px;color:var(--ink-soft);}
+blockquote{
+  margin:10px 0 0;
+  padding:8px 14px;
+  border-left:2px solid var(--rule-strong);
+  font-size:13px;
+  font-style:italic;
+  color:var(--ink-faint);
+  background:var(--surface-2);
+}
+
+/* ---- Opportunities ---- */
+.opp-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule);}
+.opp{
+  display:grid;
+  grid-template-columns:56px 1fr;
+  gap:20px;
+  padding:22px 0;
+  border-bottom:1px solid var(--rule);
+}
+.opp .idx{font-family:var(--serif);font-size:28px;color:var(--accent);}
+.opp h3{font-size:17px;margin-bottom:6px;}
+.opp p{font-size:14px;color:var(--ink-soft);margin-bottom:6px;}
+.opp .evidence{font-size:12px;color:var(--ink-faint);font-family:var(--mono);}
+
+/* ---- Footer ---- */
+.closing{
+  border-top:1px solid var(--rule);
+  padding-top:28px;
+  margin-top:24px;
+  font-size:13px;
+  color:var(--ink-faint);
+}
+
+@media (max-width:640px){
+  .wrap{padding:0 16px 100px;}
+  .masthead{padding:44px 0 28px;}
+  table.score{font-size:12px;}
+  .profile-head{flex-direction:column;}
+  .profile-head .score-badge{text-align:left;}
+}
+</style>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="eyebrow"><span class="dot"></span>Competitive Intelligence Report</div>
+    <h1 class="title">The smart medication<br><em>management</em> landscape</h1>
+    <p class="dek">A worldwide scan of pill dispensers, adherence platforms, and connected-care devices — scored, ranked, and dissected to find where <b style="color:var(--ink)">smartdose</b> can win on hardware, software, and trust.</p>
+    <div class="meta-row">
+      <span><b>Scope</b> Global, consumer + caregiver segment</span>
+      <span><b>Method</b> Firecrawl web research, Aug 2026</span>
+      <span><b>Candidates surveyed</b> 14</span>
+      <span><b>Shortlisted</b> 5</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <a href="#landscape"><span class="n">01</span> Landscape</a>
+    <a href="#scoring"><span class="n">02</span> Scoring &amp; shortlist</a>
+    <a href="#top5"><span class="n">03</span> Top 5 deep dive</a>
+    <a href="#weak"><span class="n">04</span> What fails</a>
+    <a href="#opportunities"><span class="n">05</span> Opportunities</a>
+  </div>
+
+  <section id="landscape">
+    <div class="section-head"><span class="section-num">01</span><h2>The landscape</h2></div>
+    <p class="section-intro">Medication management splits into four real categories. smartdose sits at their intersection — physical dispensing hardware, sensor-driven safety, and AI-backed software — which is exactly why almost nobody else occupies that middle ground cleanly.</p>
+
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>Robotic / automated dispensers</h4>
+        <ul>
+          <li><b>Hero</b> — subscription dispenser + app, US market leader</li>
+          <li><b>MedaCube 2.0</b> — highest capacity, VA-approved</li>
+          <li><b>MedMinder</b> (Maya / Pria) — cellular, pharmacy-channel</li>
+          <li><b>Philips Medication Dispensing Service</b> — PERS-integrated, legacy healthcare brand</li>
+          <li><b>Pillo Health</b> — robotic home-health assistant <span style="color:var(--warn)">(discontinued)</span></li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Budget / consumer dispensers</h4>
+        <ul>
+          <li><b>MOBI</b> — light-sensitive compartments, entry price</li>
+          <li><b>LiveFine</b> — Wi-Fi dispenser, Amazon-native</li>
+          <li>Generic Amazon marketplace pill boxes with app add-ons</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Tracking (non-dispensing) systems</h4>
+        <ul>
+          <li><b>PillDrill</b> — RFID tap-to-log tracker, no auto-dispense</li>
+          <li><b>Dose Health</b> (Dose Flip) — assistive pillbox + monitoring, $60/mo</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Software-only adherence &amp; AI</h4>
+        <ul>
+          <li><b>Medisafe</b> — largest adherence app, pharma B2B2C model</li>
+          <li><b>AiCure (H.Code)</b> — computer-vision dose verification for clinical trials</li>
+          <li><b>Tenovi</b> — RPM device integrations for adherence data</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="scoring">
+    <div class="section-head"><span class="section-num">02</span><h2>Scoring &amp; shortlist</h2></div>
+    <p class="section-intro">Every candidate was scored 1–10 across six weighted pillars, rolling up sixteen criteria: <b style="color:var(--ink-soft)">Product</b> (innovation, hardware, ease of use), <b style="color:var(--ink-soft)">Software</b> (app quality, AI capability), <b style="color:var(--ink-soft)">Experience</b> (design language, UX), <b style="color:var(--ink-soft)">Go-to-market</b> (pricing, positioning, marketing), <b style="color:var(--ink-soft)">Trust</b> (reviews, branding, website quality), and <b style="color:var(--ink-soft)">Business</b> (funding, model strength, competitive moat). Scores reflect what's publicly verifiable — site content, App/Play Store ratings, press coverage, and independent reviews (Wirecutter, TechEnhancedLife, The Senior List, Reddit caregiver threads).</p>
+
+    <div class="table-scroll">
+      <table class="score">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th class="num">Product</th>
+            <th class="num">Software&nbsp;/&nbsp;AI</th>
+            <th class="num">UX&nbsp;/&nbsp;Design</th>
+            <th class="num">Go-to-market</th>
+            <th class="num">Trust</th>
+            <th class="num">Business</th>
+            <th class="num">Total&nbsp;/60</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="rank1"><td class="name">Hero<span class="tag">robotic dispenser</span></td><td class="num">8</td><td class="num">8</td><td class="num">9</td><td class="num">9</td><td class="num">9</td><td class="num">7</td><td class="num total">50</td></tr>
+          <tr><td class="name">Medisafe<span class="tag">software adherence platform</span></td><td class="num">6</td><td class="num">9</td><td class="num">7</td><td class="num">7</td><td class="num">8</td><td class="num">9</td><td class="num total">46</td></tr>
+          <tr><td class="name">MedaCube<span class="tag">robotic dispenser</span></td><td class="num">9</td><td class="num">5</td><td class="num">6</td><td class="num">7</td><td class="num">7</td><td class="num">6</td><td class="num total">40</td></tr>
+          <tr><td class="name">MedMinder<span class="tag">cellular dispenser</span></td><td class="num">7</td><td class="num">5</td><td class="num">5</td><td class="num">6</td><td class="num">7</td><td class="num">7</td><td class="num total">37</td></tr>
+          <tr><td class="name">Philips Medication Dispensing Service<span class="tag">legacy PERS dispenser</span></td><td class="num">6</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">8</td><td class="num">8</td><td class="num total">35</td></tr>
+          <tr><td class="name">AiCure (H.Code)<span class="tag">clinical AI verification</span></td><td class="num">3</td><td class="num">9</td><td class="num">6</td><td class="num">4</td><td class="num">6</td><td class="num">6</td><td class="num total">34</td></tr>
+          <tr><td class="name">Dose Health<span class="tag">assistive pillbox + monitoring</span></td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num total">28</td></tr>
+          <tr><td class="name">Tenovi<span class="tag">RPM data integration</span></td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num total">28</td></tr>
+          <tr><td class="name">MOBI<span class="tag">budget dispenser</span></td><td class="num">5</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num total">25</td></tr>
+          <tr><td class="name">PillDrill<span class="tag">RFID tracker</span></td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num total">22</td></tr>
+          <tr><td class="name">LiveFine<span class="tag">budget Wi-Fi dispenser</span></td><td class="num">4</td><td class="num">2</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num total">19</td></tr>
+          <tr><td class="name">Pillo Health<span class="tag">robotic assistant — discontinued</span></td><td class="num">6</td><td class="num">4</td><td class="num">4</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num total">19</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="methodology">Scores are relative and directional, not audited financials — funding figures and ratings are sourced from Crunchbase/Tracxn, press releases, and App Store/Google Play listings current as of this report.</p>
+
+    <div class="rank-strip">
+      <div class="rank-chip"><div class="rk">RANK 1</div><div class="nm">Hero</div><div class="sc">50 / 60</div></div>
+      <div class="rank-chip"><div class="rk">RANK 2</div><div class="nm">Medisafe</div><div class="sc">46 / 60</div></div>
+      <div class="rank-chip"><div class="rk">RANK 3</div><div class="nm">MedaCube</div><div class="sc">40 / 60</div></div>
+      <div class="rank-chip"><div class="rk">RANK 4</div><div class="nm">MedMinder</div><div class="sc">37 / 60</div></div>
+      <div class="rank-chip"><div class="rk">RANK 5</div><div class="nm">Philips MDS</div><div class="sc">35 / 60</div></div>
+    </div>
+  </section>
+
+  <section id="top5">
+    <div class="section-head"><span class="section-num">03</span><h2>Top 5, in depth</h2></div>
+    <p class="section-intro">The five strongest players, examined the way a prospective customer — or a smartdose product lead — would actually encounter them: value prop, positioning, hardware and app, design language, site structure, pricing, funnel, messaging, audience, and trust mechanics.</p>
+
+    <!-- HERO -->
+    <div class="profile">
+      <div class="profile-head">
+        <div style="display:flex;gap:18px;align-items:flex-start;">
+          <div class="rank">01</div>
+          <div class="who"><h3>Hero</h3><div class="sub">herohealth.com · New York, US · Series A $12M (2018, Brainchild Holdings)</div></div>
+        </div>
+        <div class="score-badge"><div class="big">50/60</div><div class="lbl">Total score</div></div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-grid">
+          <div class="pf"><div class="pf-label">Core value proposition</div><div class="pf-body">"Never manage medication logistics again" — an all-inclusive subscription that bundles hardware, app, 24/7 support, and a lifetime warranty into one monthly fee, positioning the dispenser as a service rather than a gadget you own and eventually have to troubleshoot alone.</div></div>
+          <div class="pf"><div class="pf-label">Product positioning</div><div class="pf-body">Premium, DTC, direct-response. Explicitly contrasts itself against "$1,999 outright purchase, 1-year warranty, no app" competitors — MedaCube and MedMinder by implication — to justify the subscription model.</div></div>
+          <div class="pf"><div class="pf-label">Hardware &amp; features</div><div class="pf-body">Countertop unit ("size of a coffee maker"), one-button dispense, 90-day / 10-medication capacity, Wi-Fi (2.4GHz) connected, passcode lock, max-dispense limits, low-pill alerts.</div></div>
+          <div class="pf"><div class="pf-label">App &amp; AI</div><div class="pf-body">Tracks up to 10 additional meds outside the device for a unified regimen view. Reminders, caregiver notifications, adherence history — not deep AI/behavioral modeling, but the most polished execution of the basics in the category.</div></div>
+          <div class="pf"><div class="pf-label">Design language</div><div class="pf-body">Warm, human, lifestyle photography (real seniors, real kitchens) rather than clinical device shots. Yellow/warm accent, rounded consumer-electronics form factor — closer to a Nest thermostat than a medical device.</div></div>
+          <div class="pf"><div class="pf-label">Website structure</div><div class="pf-body">Single scrolling DTC funnel: hero → problem/relief framing → 3 benefit tiles → social proof (App Store/Play star ratings inline) → "how it works" 5-step → video testimonials → FAQ objection-handling → sticky CTA. Every scroll stop re-offers the discount.</div></div>
+          <div class="pf"><div class="pf-label">Pricing</div><div class="pf-body">$29.99/mo (12-month prepaid) · $44.99/mo (12-month plan) · $59.99/mo (no commitment) — tiered around commitment length, not features. 30-day money-back guarantee.</div></div>
+          <div class="pf"><div class="pf-label">Customer journey &amp; funnel</div><div class="pf-body">Ad → landing page → "add to cart" (framed as a plan choice, not a purchase) → 30-day trial → auto-continuation onto prepaid/monthly plan. AARP partnership adds a trusted third-party discount channel.</div></div>
+          <div class="pf"><div class="pf-label">Messaging &amp; tone</div><div class="pf-body">Caregiver-first language ("peace of mind," "for you and your loved one"), FAQ pre-empts the two objections that actually convert or kill a subscription sale: <i>why not buy outright</i> and <i>can I cancel</i>.</div></div>
+          <div class="pf"><div class="pf-label">Target audience</div><div class="pf-body">Adult children managing a parent's meds remotely — the purchaser and the user are usually different people, and the whole funnel is written to the purchaser.</div></div>
+          <div class="pf"><div class="pf-label">Trust-building</div><div class="pf-body">HIPAA/FDA-registration callouts, physician testimonial (Brown University School of Public Health), 4.7★ aggregate with visible review counts, "30-day money-back" repeated at every decision point.</div></div>
+        </div>
+        <div class="tag-row"><span class="tag">Category leader</span><span class="tag">Subscription-as-service</span><span class="tag">Strongest brand</span><span class="tag">Weak spot: cancellation friction reported by users</span></div>
+      </div>
+    </div>
+
+    <!-- MEDISAFE -->
+    <div class="profile">
+      <div class="profile-head">
+        <div style="display:flex;gap:18px;align-items:flex-start;">
+          <div class="rank">02</div>
+          <div class="who"><h3>Medisafe</h3><div class="sub">medisafe.com · Boston/Israel · $51.5M raised across 7 rounds incl. Sanofi Ventures</div></div>
+        </div>
+        <div class="score-badge"><div class="big">46/60</div><div class="lbl">Total score</div></div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-grid">
+          <div class="pf"><div class="pf-label">Core value proposition</div><div class="pf-body">A pure-software "digital drug companion" — no hardware at all — that pharma companies license to activate patients on specific therapies, with the consumer app as the free front door.</div></div>
+          <div class="pf"><div class="pf-label">Product positioning</div><div class="pf-body">B2B2C: sells "50x ROI" and "13M+ patients supported" to pharma brand teams, not to end users. The patient-facing app is a lead-gen and outcomes-data engine for that enterprise business.</div></div>
+          <div class="pf"><div class="pf-label">Hardware &amp; features</div><div class="pf-body">None by design — this is the control case for what a smartdose competitor looks like with zero physical differentiation.</div></div>
+          <div class="pf"><div class="pf-label">App &amp; AI</div><div class="pf-body">AI-timed reminders that adapt to when a user actually responds (not just a fixed alarm), birth-control-specific logic, 2B+ logged doses feeding a genuinely large behavioral dataset — the deepest AI/ML data moat in this list.</div></div>
+          <div class="pf"><div class="pf-label">Design language</div><div class="pf-body">Modern SaaS/enterprise aesthetic — clean sans-serif, blue-green gradients, dashboard mockups — reads as a health-tech B2B vendor, not a consumer product.</div></div>
+          <div class="pf"><div class="pf-label">Website structure</div><div class="pf-body">Enterprise marketing site segmented by audience (For Pharma / For Providers / For Patients) rather than a single funnel — reflects the three-sided business model.</div></div>
+          <div class="pf"><div class="pf-label">Pricing</div><div class="pf-body">Free to patients; enterprise licensing to pharma (undisclosed). No consumer price point at all.</div></div>
+          <div class="pf"><div class="pf-label">Customer journey &amp; funnel</div><div class="pf-body">Two funnels running in parallel: app-store discovery for patients (7M+ registered users, 4.7★ across 350K reviews), and enterprise sales cycles for pharma partnerships (25+ pharma partners).</div></div>
+          <div class="pf"><div class="pf-label">Messaging &amp; tone</div><div class="pf-body">Outcomes and evidence language — "IQVIA validated," "5.8% higher adherence," clinical-trial-grade citations — built for procurement committees, not grieving families.</div></div>
+          <div class="pf"><div class="pf-label">Target audience</div><div class="pf-body">Patients on specialty/chronic therapies (oncology, cardiology) as the end user; pharma brand and market-access teams as the actual buyer.</div></div>
+          <div class="pf"><div class="pf-label">Trust-building</div><div class="pf-body">Scale numbers as credibility (7M users, 2B doses), named pharma logos, third-party research citations (IQVIA, NIH) rather than star ratings or testimonials.</div></div>
+        </div>
+        <div class="tag-row"><span class="tag">Best-in-class AI/data</span><span class="tag">Zero hardware</span><span class="tag">Diversified revenue via pharma</span></div>
+      </div>
+    </div>
+
+    <!-- MEDACUBE -->
+    <div class="profile">
+      <div class="profile-head">
+        <div style="display:flex;gap:18px;align-items:flex-start;">
+          <div class="rank">03</div>
+          <div class="who"><h3>MedaCube 2.0</h3><div class="sub">medacube.com · US · Shopify-run DTC + veteran channel</div></div>
+        </div>
+        <div class="score-badge"><div class="big">40/60</div><div class="lbl">Total score</div></div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-grid">
+          <div class="pf"><div class="pf-label">Core value proposition</div><div class="pf-body">"The most capacity you can buy" — leads with hard specs (16 meds, 90 days) and a claimed 97% adherence rate vs. 55% for manual pillboxes, appealing to buyers who compare on capability, not lifestyle.</div></div>
+          <div class="pf"><div class="pf-label">Product positioning</div><div class="pf-body">Specs-and-value challenger to Hero — sold outright rather than subscribed, and explicitly VA-approved, which opens a zero-cost channel for veterans that none of the subscription players can match.</div></div>
+          <div class="pf"><div class="pf-label">Hardware &amp; features</div><div class="pf-body">Touchscreen interface built for low mobility/dexterity, real-time missed-dose alerts to caregivers, largest med-count capacity in the category.</div></div>
+          <div class="pf"><div class="pf-label">Design language</div><div class="pf-body">Navy/white, e-commerce product-photography style — reads as durable medical equipment rather than a lifestyle object; less emotionally warm than Hero.</div></div>
+          <div class="pf"><div class="pf-label">Website structure</div><div class="pf-body">Standard Shopify PDP: spec callouts, badge (VA-approved), warranty terms, review carousel — a product page, not a narrative funnel.</div></div>
+          <div class="pf"><div class="pf-label">Pricing</div><div class="pf-body">One-time hardware purchase model (vs. Hero's pure subscription) — appeals to buyers who resist recurring fees, at the cost of Hero's "always up to date, free replacement" safety net.</div></div>
+          <div class="pf"><div class="pf-label">Customer journey</div><div class="pf-body">Comparison-shopper funnel — heavily indexed by review sites (The Senior List, TechEnhancedLife) that rank it #1 on capacity, so much of its traffic is earned via third-party "best of" placement rather than owned brand demand.</div></div>
+          <div class="pf"><div class="pf-label">Trust-building</div><div class="pf-body">VA approval as an institutional trust signal, quantified adherence-rate claim, one-year warranty.</div></div>
+        </div>
+        <div class="tag-row"><span class="tag">Capacity leader</span><span class="tag">VA channel</span><span class="tag">Weak spot: clinical, unemotional brand voice</span></div>
+      </div>
+    </div>
+
+    <!-- MEDMINDER -->
+    <div class="profile">
+      <div class="profile-head">
+        <div style="display:flex;gap:18px;align-items:flex-start;">
+          <div class="rank">04</div>
+          <div class="who"><h3>MedMinder</h3><div class="sub">medminder.com · US · Pharmacy &amp; health-plan distribution</div></div>
+        </div>
+        <div class="score-badge"><div class="big">37/60</div><div class="lbl">Total score</div></div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-grid">
+          <div class="pf"><div class="pf-label">Core value proposition</div><div class="pf-body">Positions itself as a full-service digital pharmacy plus dispenser — not just a device — coordinating refills and provider communication on the patient's behalf.</div></div>
+          <div class="pf"><div class="pf-label">Product positioning</div><div class="pf-body">B2B2C via health plans and pharmacies as much as direct-to-consumer — the least DTC-native of the hardware players, built for institutional/value-based-care buyers.</div></div>
+          <div class="pf"><div class="pf-label">Hardware</div><div class="pf-body">Cellular-connected dispensers (Maya, Pria) aimed specifically at memory-impaired patients.</div></div>
+          <div class="pf"><div class="pf-label">Design language</div><div class="pf-body">Dated WordPress/Divi template, generic stock imagery, orange accent with no distinct visual identity — the weakest brand execution among the top 5.</div></div>
+          <div class="pf"><div class="pf-label">Pricing</div><div class="pf-body">Not published on-site — quote/intake-form gated, which signals a B2B/insurance sales motion rather than instant DTC purchase, but adds friction for self-pay families.</div></div>
+          <div class="pf"><div class="pf-label">Trust-building</div><div class="pf-body">"Value-based care" language and health-plan partnerships lend institutional credibility that offsets the weak visual brand.</div></div>
+        </div>
+        <div class="tag-row"><span class="tag">Health-plan distribution</span><span class="tag">Weak spot: dated site, gated pricing</span></div>
+      </div>
+    </div>
+
+    <!-- PHILIPS -->
+    <div class="profile">
+      <div class="profile-head">
+        <div style="display:flex;gap:18px;align-items:flex-start;">
+          <div class="rank">05</div>
+          <div class="who"><h3>Philips Medication Dispensing Service</h3><div class="sub">lifeline.com · Global · Philips / Lifeline brand</div></div>
+        </div>
+        <div class="score-badge"><div class="big">35/60</div><div class="lbl">Total score</div></div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-grid">
+          <div class="pf"><div class="pf-label">Core value proposition</div><div class="pf-body">Bundles medication dispensing into Philips Lifeline's existing medical-alert (PERS) relationship — sold as an add-on to a service families already trust for fall detection, not as a standalone product.</div></div>
+          <div class="pf"><div class="pf-label">Hardware</div><div class="pf-body">60-cup capacity, up to 6 doses/day — mid-tier capacity, phone-line/landline-era architecture in parts of the support documentation.</div></div>
+          <div class="pf"><div class="pf-label">Design &amp; website</div><div class="pf-body">Support-portal-first content (troubleshooting, loading trays, "keep away from water/heat") rather than an aspirational product story — reads as legacy medical-device documentation, not 2026 consumer software.</div></div>
+          <div class="pf"><div class="pf-label">Trust-building</div><div class="pf-body">The Philips corporate name and Lifeline's decades of PERS trust are the entire trust mechanism — the product itself does little marketing of its own.</div></div>
+        </div>
+        <div class="tag-row"><span class="tag">Trusted incumbent brand</span><span class="tag">Weak spot: legacy UX, no real app/AI story</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="weak">
+    <div class="section-head"><span class="section-num">04</span><h2>What fails, and why</h2></div>
+    <p class="section-intro">The bottom of the market is as instructive as the top. Four recurring failure modes show up across the weaker and defunct products — each is a guardrail for smartdose.</p>
+
+    <div class="weak-card">
+      <h3>Pillo Health</h3>
+      <span class="fate">Acquired by Stanley Black &amp; Decker (2020) → quietly discontinued</span>
+      <p style="font-size:14px;color:var(--ink-soft);">A tabletop "home health robot" with a screen, camera, and conversational assistant on top of pill dispensing — technically the most ambitious product in the category, and the clearest cautionary tale.</p>
+      <div class="weak-grid">
+        <div><div class="wl">Common mistake</div><div class="wb">Feature bloat — voice assistant, video calling, and "companion" framing stacked onto the core dispensing job, raising cost and failure surface without a proportional adherence benefit.</div></div>
+        <div><div class="wl">Missing</div><div class="wb">A clear, single reason to buy. It tried to be a robot, a health assistant, and a dispenser at once, and communicated none of them crisply.</div></div>
+        <div><div class="wl">Business outcome</div><div class="wb">Post-acquisition, the parent company had no consumer healthcare distribution to scale it — the product died from a channel/business-model mismatch, not a technology failure.</div></div>
+      </div>
+    </div>
+
+    <div class="weak-card">
+      <h3>PillDrill</h3>
+      <span class="fate">Still operating, but stuck as a niche also-ran</span>
+      <p style="font-size:14px;color:var(--ink-soft);">An RFID "tap to log" tracker: you still sort pills manually, then tap a tagged bottle on a base station to log the dose.</p>
+      <div class="weak-grid">
+        <div><div class="wl">Common mistake</div><div class="wb">Calling a logging device "smart medication management" when it automates nothing about the actual task — sorting, timing, and dispensing are all still manual.</div></div>
+        <div><div class="wl">Poor UX</div><div class="wb">Requires the patient to remember to tap the device, which is the same failure mode (forgetting) the product claims to solve.</div></div>
+        <div><div class="wl">Missing features</div><div class="wb">No dispensing, no lockout, no capacity planning — it's an inventory scanner wearing an adherence-platform label.</div></div>
+      </div>
+    </div>
+
+    <div class="weak-card">
+      <h3>Budget Wi-Fi dispensers (LiveFine, generic Amazon marketplace units)</h3>
+      <span class="fate">Commoditized, race-to-the-bottom segment</span>
+      <p style="font-size:14px;color:var(--ink-soft);">Sub-$160 dispensers sold primarily through Amazon, often the same OEM hardware relabeled under different storefronts.</p>
+      <div class="weak-grid">
+        <div><div class="wl">Weak branding</div><div class="wb">No owned website worth the name, no support infrastructure, generic product photography — reviewers explicitly note connectivity is "the more expensive model only," meaning the entry price hides the actually useful feature.</div></div>
+        <div><div class="wl">Poor UX</div><div class="wb">Independent reviewers (The Senior List) flag these as unsuitable for anyone with memory issues precisely because they lack real connected monitoring.</div></div>
+        <div><div class="wl">Customer complaints</div><div class="wb">Caregiver-forum threads (r/dementia) on category products cite frequent jamming, difficult loading, and — pointedly — misleading in-app cancellation flows and prices that feel disproportionate to reliability ("$44/month... insanely overpaid").</div></div>
+      </div>
+    </div>
+
+    <div class="weak-card">
+      <h3>Category-wide reliability &amp; trust gap</h3>
+      <span class="fate">Cuts across nearly every hardware competitor, including the leaders</span>
+      <p style="font-size:14px;color:var(--ink-soft);">Independent hands-on evaluations (TechEnhancedLife) and caregiver forums converge on the same short list of complaints regardless of brand.</p>
+      <blockquote>"It is not easy to load, it jams frequently, and at $44/month it is insanely overpaid... the app makes it look like you can cancel within the app [but you can't]."</blockquote>
+      <div class="weak-grid">
+        <div><div class="wl">Mechanical trust</div><div class="wb">Jamming and misfeeds are the single most-cited hardware complaint across the category — the physical dispense mechanism is where trust is won or lost, not the app.</div></div>
+        <div><div class="wl">Billing trust</div><div class="wb">Subscription cancellation friction is a recurring complaint even for the category leader — a fixable trust gap that's currently a shared liability, not a moat, for any one competitor.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="opportunities">
+    <div class="section-head"><span class="section-num">05</span><h2>Where smartdose can win</h2></div>
+    <p class="section-intro">Six patterns recur across the winners and losers above. Together they sketch the gap smartdose's <em style="font-style:italic;color:var(--accent-ink);">rising-compartment hardware + AR + AI analytics</em> concept is positioned to fill — if it executes on the two things this category still gets wrong: mechanical reliability and emotional design.</p>
+
+    <div class="opp-list">
+      <div class="opp">
+        <div class="idx">1</div>
+        <div>
+          <h3>Make the physical mechanism the flagship trust feature, not an afterthought</h3>
+          <p>Jamming and misloads are the #1 recurring complaint across Hero, budget dispensers, and forum threads alike. smartdose's sealed, motorized "correct compartment rises" mechanism should be engineered and marketed as the reliability differentiator — stress-tested and demonstrated on video — rather than treated as a solved problem behind the app.</p>
+          <div class="evidence">Evidence: Reddit r/dementia caregiver reviews; TechEnhancedLife hands-on evaluations</div>
+        </div>
+      </div>
+      <div class="opp">
+        <div class="idx">2</div>
+        <div>
+          <h3>Bundle hardware+software+support like Hero, but fix the billing trust gap Hero itself hasn't</h3>
+          <p>The all-inclusive subscription (no obsolescence, free replacement, one fee) is the strongest business-model innovation in the category — but "can't actually cancel in-app" is a live, publicly documented complaint. A frictionless, one-tap cancellation flow, marketed as a guarantee rather than buried in an FAQ, would be a genuine differentiator smartdose can own outright.</p>
+          <div class="evidence">Evidence: Hero FAQ commitment terms; r/dementia thread on cancellation friction</div>
+        </div>
+      </div>
+      <div class="opp">
+        <div class="idx">3</div>
+        <div>
+          <h3>Design like a lifestyle object, not medical equipment</h3>
+          <p>Only Hero has broken from clinical-navy/beige industrial design into warm, human photography and a Nest-like form factor — and it's not a coincidence that Hero also scores highest on brand trust. MedaCube, MedMinder, and Philips all still read as durable medical hardware. smartdose's sealed-compartment form factor and AR features give it room to look genuinely premium — closer to a smart-home device than a pill organizer.</p>
+          <div class="evidence">Evidence: comparative site audits of Hero vs. MedaCube vs. MedMinder</div>
+        </div>
+      </div>
+      <div class="opp">
+        <div class="idx">4</div>
+        <div>
+          <h3>Treat AI/analytics as a second product, the way Medisafe does</h3>
+          <p>Medisafe's core insight — that de-identified adherence and behavioral data has direct commercial value to pharma, payers, and providers — is invisible to every hardware competitor in this list. smartdose's AI-powered adherence analytics could support a B2B2C revenue layer (pharma insight partnerships, payer/health-plan reimbursement) in addition to the consumer subscription, diversifying revenue the way none of the hardware players currently do.</p>
+          <div class="evidence">Evidence: Medisafe funding history (Sanofi Ventures, Merck Ventures participation); "50x ROI" pharma positioning</div>
+        </div>
+      </div>
+      <div class="opp">
+        <div class="idx">5</div>
+        <div>
+          <h3>Open institutional channels early — VA, health plans, PERS bundles</h3>
+          <p>MedaCube's VA approval and MedMinder/Philips's health-plan and PERS distribution show that the biggest non-obvious growth lever in this category is reimbursement and institutional bundling, not DTC ad spend. smartdose should pursue Medicare Advantage, VA, and insurance-reimbursement pathways in parallel with direct sales from day one.</p>
+          <div class="evidence">Evidence: MedaCube VA-approved positioning; MedMinder health-plan distribution model</div>
+        </div>
+      </div>
+      <div class="opp">
+        <div class="idx">6</div>
+        <div>
+          <h3>Keep AR/QR as a sharp, optional layer — not Pillo's mistake</h3>
+          <p>Pillo Health died from feature bloat: a robot, a health assistant, and a dispenser bundled without a crisp core story. smartdose's AR/QR medication-info layer is a genuine differentiator, but it should ship as a fast, optional "scan to learn" moment layered on a rock-solid dispensing core — never positioned as competing with the core job of getting the right pill dispensed on time.</p>
+          <div class="evidence">Evidence: Pillo Health product scope vs. Stanley Black &amp; Decker discontinuation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    Compiled via Firecrawl web research (search, scrape, and page analysis) across company sites, App Store/Google Play listings, independent review outlets (Wirecutter, The Senior List, TechEnhancedLife, Healthline), funding databases (Crunchbase, Tracxn), and caregiver community discussion. Competitive positioning and scores are directional judgments intended to inform smartdose's product and go-to-market strategy, not a substitute for primary customer research or regulatory/IP diligence.
+  </div>
+
+</div>

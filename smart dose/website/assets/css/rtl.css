@@ -1,0 +1,50 @@
+/* ==========================================================================
+   smartdose — RTL (Arabic) overrides
+   Loaded after styles.css only on Arabic pages (html[dir="rtl"])
+   ========================================================================== */
+
+html[dir="rtl"] body{
+  font-family:"Segoe UI","Tahoma","Geeza Pro",var(--sans);
+}
+html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] h4{
+  font-family:"Segoe UI","Tahoma",var(--serif);
+}
+
+/* Directional icons: mirror anything that visually points "forward" (left-to-right) */
+html[dir="rtl"] .link-arrow svg,
+html[dir="rtl"] .opp .idx + h3 + p + .evidence, /* no-op guard, safe */
+html[dir="rtl"] .ba-arrow svg{
+  transform:scaleX(-1);
+}
+html[dir="rtl"] .link-arrow:hover svg{
+  transform:scaleX(-1) translateX(3px);
+}
+
+/* Accordion chevron/plus stays symmetric — no mirroring needed */
+
+/* Skip link should hug the same reading-start edge */
+html[dir="rtl"] .skip-link{ left:auto; right:16px; }
+
+/* Numbers that must stay LTR even inside Arabic copy (prices, stats, dates) */
+html[dir="rtl"] .price-amount,
+html[dir="rtl"] .stat,
+html[dir="rtl"] td.num,
+html[dir="rtl"] .bar-chart,
+html[dir="rtl"] .bar-chart + .flex-between{
+  direction:ltr;
+  unicode-bidi:isolate;
+}
+html[dir="rtl"] .price-amount{ justify-content:flex-end; }
+
+/* Quoted product/brand name stays LTR inline */
+html[dir="rtl"] .brand{ direction:ltr; }
+html[dir="rtl"] .footer-brand .brand{ justify-content:flex-start; }
+
+/* Language switcher pill */
+.lang-switch{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  padding:8px 14px;border-radius:999px;border:1px solid var(--rule-strong);
+  color:var(--ink-soft);transition:background .15s, color .15s;
+}
+.lang-switch:hover{ background:var(--surface-2); color:var(--ink); }
