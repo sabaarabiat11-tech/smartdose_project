@@ -337,6 +337,8 @@ td.feature-name{font-weight:600;color:var(--ink);}
 }
 .phone-screen{background:var(--surface);border-radius:26px;overflow:hidden;aspect-ratio:9/19.5;position:relative;}
 .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:44%;height:22px;background:var(--ink);border-radius:0 0 14px 14px;z-index:2;}
+.phone-screen img.phone-shot{width:100%;height:100%;object-fit:cover;display:block;}
+.phone-caption{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:14px;}
 .phone-ui{padding:36px 16px 16px;font-family:var(--sans);}
 .phone-ui .app-head{font-size:12px;color:var(--ink-faint);margin-bottom:4px;}
 .phone-ui .app-title{font-family:var(--serif);font-size:19px;margin-bottom:16px;color:var(--ink);}
@@ -349,6 +351,20 @@ td.feature-name{font-weight:600;color:var(--ink);}
 .dose-row.done .dot-status{background:var(--accent);}
 .bar-chart{display:flex;align-items:flex-end;gap:6px;height:60px;margin-top:16px;}
 .bar-chart .bar{flex:1;background:var(--accent);border-radius:4px 4px 0 0;opacity:.85;}
+
+/* ---- App download card ---- */
+.download-card{
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius-lg);
+  padding:28px 32px;box-shadow:var(--shadow-md);
+}
+.download-card .qr-box{
+  flex:none;width:104px;height:104px;padding:8px;background:#fff;border-radius:14px;border:1px solid var(--rule);
+}
+.download-card .qr-box img{width:100%;height:100%;display:block;}
+.download-card .dl-body{flex:1;min-width:200px;}
+.download-card .dl-note{font-size:12.5px;color:var(--ink-faint);margin-top:10px;}
+@media (max-width:560px){.download-card{flex-direction:column;text-align:center;}}
 
 /* ---- AR scan mockup ---- */
 .scan-frame{

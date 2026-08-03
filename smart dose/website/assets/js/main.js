@@ -89,11 +89,33 @@
     }
   });
 
-  /* Contact form — static demo submission */
+  /* Contact form — hands off to the visitor's email client, addressed to smartdose */
   var contactForm = document.querySelector("#contact-form");
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
       e.preventDefault();
+
+      var name = (contactForm.querySelector("#name") || {}).value || "";
+      var email = (contactForm.querySelector("#email") || {}).value || "";
+      var reasonEl = contactForm.querySelector("#reason");
+      var reason = reasonEl ? reasonEl.value : "";
+      var message = (contactForm.querySelector("#message") || {}).value || "";
+
+      var subject = "smartdose contact form: " + reason;
+      var bodyLines = [
+        "Name: " + name,
+        "Email: " + email,
+        "Reason: " + reason,
+        "",
+        message
+      ];
+      var mailto =
+        "mailto:smartdose.ee@gmail.com" +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(bodyLines.join("\n"));
+
+      window.location.href = mailto;
+
       var success = document.querySelector("#form-success");
       contactForm.reset();
       if (success) {

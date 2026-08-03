@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mobile App — smartdose</title>
-<meta name="description" content="The smartdose app: schedules, adherence history, health insights, and caregiver notifications, for iOS and Android.">
+<meta name="description" content="The smartdose app: schedules, adherence history, health insights, and caregiver notifications. Download the Android app now — iOS arrives at device launch.">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
 <link rel="stylesheet" href="assets/css/styles.css">
@@ -51,29 +51,23 @@
         <div class="eyebrow"><span class="dot"></span>Mobile app</div>
         <h1>Everything the device knows, in your pocket.</h1>
         <p class="lede">The smartdose app is the shared window between patient and caregiver — live device status, full history, and the alerts that matter, without the noise.</p>
-        <div class="hero-actions">
-          <span class="btn btn-ghost btn-lg" aria-disabled="true">iOS — coming at launch</span>
-          <span class="btn btn-ghost btn-lg" aria-disabled="true">Android — coming at launch</span>
+        <div class="download-card mt-24" data-reveal>
+          <div class="qr-box">
+            <img src="assets/img/app-download-qr.png" alt="QR code linking to the smartdose Android app download" loading="lazy">
+          </div>
+          <div class="dl-body">
+            <div class="eyebrow clay" style="margin-bottom:8px;"><span class="dot"></span>Available now</div>
+            <a href="https://github.com/sabaarabiat11-tech/smartdose_project/releases/latest/download/app-release-6.apk" class="btn btn-primary btn-lg">Click to download the app</a>
+            <p class="dl-note">Direct APK download for Android · scan the code or tap the button. iOS arrives at device launch.</p>
+          </div>
         </div>
-        <p class="small">The app ships alongside the device. <a class="link-arrow" href="contact.html">Join the waitlist for early access <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
       </div>
       <div class="phone" data-reveal>
         <div class="phone-screen">
           <div class="phone-notch"></div>
-          <div class="phone-ui">
-            <div class="app-head">Today</div>
-            <div class="app-title">Your schedule</div>
-            <div class="dose-row done"><span>8:00 AM · Metformin</span><span class="dot-status"></span></div>
-            <div class="dose-row done"><span>1:00 PM · Lisinopril</span><span class="dot-status"></span></div>
-            <div class="dose-row"><span>7:00 PM · Atorvastatin</span><span class="dot-status"></span></div>
-            <div class="bar-chart" aria-hidden="true">
-              <div class="bar" style="height:70%;"></div><div class="bar" style="height:90%;"></div>
-              <div class="bar" style="height:60%;"></div><div class="bar" style="height:95%;"></div>
-              <div class="bar" style="height:85%;"></div><div class="bar" style="height:100%;"></div>
-              <div class="bar" style="height:40%;"></div>
-            </div>
-          </div>
+          <img class="phone-shot" src="assets/img/source/app-home-en.jpg" alt="smartdose app home screen showing case connection status and quick actions">
         </div>
+        <p class="phone-caption">Home</p>
       </div>
     </div>
   </section>
@@ -99,23 +93,31 @@
   </section>
 
   <section class="section" style="background:var(--surface-2);">
-    <div class="container hero-grid">
-      <div class="phone" data-reveal style="order:2;">
-        <div class="phone-screen">
-          <div class="phone-notch"></div>
-          <div class="phone-ui">
-            <div class="app-head">Caregiver view</div>
-            <div class="app-title">This week</div>
-            <div class="dose-row done"><span>20 of 21 doses taken</span><span class="dot-status"></span></div>
-            <div class="dose-row"><span>Missed: Tue, 7:00 PM</span><span class="dot-status"></span></div>
-            <div class="small mt-16">"Mom's adherence held steady this week except one evening dose — flagged, not urgent."</div>
-          </div>
-        </div>
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow clay"><span class="dot"></span>The real interface</div>
+        <h2>Not a mockup — this is the actual app.</h2>
+        <p class="body-copy center">Schedule tracking and a fully customizable settings screen, including light/dark theme, energy-saving mode, alert tones, and bilingual Arabic/English support.</p>
       </div>
-      <div style="order:1;">
-        <div class="eyebrow"><span class="dot"></span>Plain language, not raw logs</div>
-        <h2>Weekly summaries a caregiver can actually read at a glance.</h2>
-        <p class="body-copy mt-16">Instead of a spreadsheet of timestamps, the app translates adherence data into a short, human sentence — so a busy adult child gets the signal without digging for it.</p>
+      <div class="grid g-2" style="max-width:600px;margin:0 auto;">
+        <div>
+          <div class="phone" data-reveal>
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <img class="phone-shot" src="assets/img/source/app-schedule-en.jpg" alt="smartdose app schedule screen for tracking scheduled doses">
+            </div>
+          </div>
+          <p class="phone-caption">Schedule</p>
+        </div>
+        <div>
+          <div class="phone" data-reveal>
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <img class="phone-shot" src="assets/img/source/app-settings-en.jpg" alt="smartdose app settings screen with theme, time format, energy-saving mode, alert tone, and language options">
+            </div>
+          </div>
+          <p class="phone-caption">Settings</p>
+        </div>
       </div>
     </div>
   </section>
